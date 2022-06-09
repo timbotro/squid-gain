@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/timbo/workspace/timbo/squid-gain'
+npx sqd db:migrate
+node -r dotenv/config lib/processor.js
+make: Leaving directory `/Users/timbo/workspace/timbo/squid-gain'
+ 

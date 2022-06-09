@@ -11,3 +11,34 @@ type HistoricalBalance @entity {
   balance: BigInt!
   date: DateTime!
 }
+
+type Swap @entity{
+   timestamp: BigInt
+   fromCurrency: String
+   toCurrency: String
+   fromAmount: BigInt
+   toAmount: BigInt
+}
+
+type LiquidityChange @entity {
+  id: ID!
+  timestamp: BigInt!
+  blockNumber: Int!
+  eventIdx: Int!
+  step: Int!
+  reason: LiquidityChangeReason!
+  currencyZero: String!
+  currencyOne: String!
+  amountZero: BigInt!
+  amountOne: BigInt!
+  balanceZero: BigInt!
+  balanceOne: BigInt!
+}
+
+
+enum LiquidityChangeReason {
+  INIT
+  SWAP
+  ADD
+  REMOVE
+}
