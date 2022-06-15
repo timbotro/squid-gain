@@ -52,23 +52,29 @@ export async function handleDailyStats(ctx: BlockHandlerContext) {
   if (formattedDate.getTime() == blockDate.getTime()) return
 
   if (blockDate.getTime() > formattedDate.getTime()) {
-
     const overviewHistory = await getOverviewHistory(ctx, formattedDate)
     for (let i = 0; i < tradingPairs.length; i++) {
       const ccy0 = tradingPairs[i][0]
       const ccy1 = tradingPairs[i][1]
       const pool = await getPool(ctx, ccy0.Token, ccy1.Token)
-      const poolVol = await getDailyPoolVol(ctx, pool,formattedDate)
+      const poolVol = await getDailyPoolVol(ctx, pool, formattedDate)
       const poolLiquidity = await getPoolLiquidity(ctx, pool)
       overviewHistory.totalLiquidity =
-        BigInt(overviewHistory.totalLiquidity!) + BigInt(Number(poolLiquidity.usdTotalLiquidity).toFixed(0))
-      overviewHistory.totalVolumeDay =
-        BigInt(overviewHistory.totalVolumeDay!) + BigInt(Number(poolVol!.volumeDayUSD).toFixed(0))
+        BigInt(overviewHistory.totalLiquidity!) + bigIntConvert(poolLiquidity, "usdTotalLiquidity")
+      overviewHistory.totalVolumeDay = BigInt(overviewHistory.totalVolumeDay!) + bigIntConvert(poolVol,"volumeDayUSD")
     }
 
     await ctx.store.save(overviewHistory)
     lastOverviewTimestamp = ctx.block.timestamp
     return
+  }
+}
+
+function bigIntConvert(section: any, call: any): bigint {
+  try {
+    return BigInt(Number(section[call]).toFixed(0))
+  } catch {
+    return BigInt(0)
   }
 }
 
@@ -155,7 +161,7 @@ async function getPoolLiquidity(ctx: BlockHandlerContext | EventHandlerContext, 
     return poolVol
   }
 }
-async function getDailyPoolVol(ctx: BlockHandlerContext, pool: Pool, timestamp: Date){
+async function getDailyPoolVol(ctx: BlockHandlerContext, pool: Pool, timestamp: Date) {
   return await ctx.store.findOne<PoolVolumeDay>(PoolVolumeDay, { where: { pool: pool, timestamp: timestamp } })
 }
 

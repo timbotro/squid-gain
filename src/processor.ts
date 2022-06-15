@@ -13,7 +13,7 @@ processor.setDataSource({
   chain: process.env.KAR_WSS as string,
 })
 processor.setTypesBundle('karura')
-processor.setBlockRange({ from: 2000000 })
+processor.setBlockRange({ from: 1500000 })
 processor.addPreHook(handlePoolData)
 processor.addPreHook(handleDailyStats)
 processor.addEventHandler('dex.Swap', handlers.handleSwap)

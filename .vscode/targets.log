@@ -289,7 +289,7 @@ explore:
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 34):
 	@npx squid-substrate-metadata-explorer \
-	--chain wss://karura.api.onfinality.io/public-ws \
+	--chain wss://karura-rpc.dwellir.com \
 	--archive https://karura.indexer.gc.subsquid.io/v4/graphql \
 	--out karuraVersions.json
 	
