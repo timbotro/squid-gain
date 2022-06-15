@@ -2,7 +2,7 @@ import primitivesConfig from '@acala-network/type-definitions/primitives'
 import { BlockHandlerContext, EventHandlerContext, Store } from '@subsquid/substrate-processor'
 import { DexSwapEvent } from '../types/events'
 import { calcUsdVal, getLiquidityPool } from './utility'
-import { Currency, Pool, PoolLiquidity, PoolVolumeDay } from '../model/generated'
+import { Currency, OverviewHistory, Pool, PoolLiquidity, PoolVolumeDay } from '../model/generated'
 import { addLiquidityChange, getCurrency, updateGlobalLiquidities, updateGlobalVolumes } from './utility'
 import { startOfDay, startOfHour } from 'date-fns'
 import { StorageContext } from '../types/support'
@@ -12,8 +12,10 @@ import { getDecimals } from '../tools/decimals'
 import { stat } from 'fs'
 import { tradingPairs } from '../static/tradingPairs'
 import { getApi } from './newApi'
+import { start } from 'repl'
 
 let lastStateTimestamp = 0
+let lastOverviewTimestamp = 0
 
 export async function handlePoolData(ctx: BlockHandlerContext) {
   if (lastStateTimestamp == 0) {
@@ -36,8 +38,58 @@ export async function handlePoolData(ctx: BlockHandlerContext) {
 
   lastStateTimestamp = ctx.block.timestamp
   return
-  // if it has do a lookup of pool liquidity and save it to a daily record
-  // then update the overviewhistory for the total liquidity
+}
+
+export async function handleDailyStats(ctx: BlockHandlerContext) {
+  if (lastOverviewTimestamp == 0) {
+    const lastOverviewHistory = await getLastOverviewHistory(ctx.store)
+    lastOverviewTimestamp = lastOverviewHistory ? lastOverviewHistory.timestamp!.getTime() : ctx.block.timestamp
+  }
+
+  const formattedDate = startOfDay(new Date(lastOverviewTimestamp))
+  const blockDate = startOfDay(new Date(ctx.block.timestamp))
+
+  if (formattedDate.getTime() == blockDate.getTime()) return
+
+  if (blockDate.getTime() > formattedDate.getTime()) {
+
+    const overviewHistory = await getOverviewHistory(ctx, formattedDate)
+    for (let i = 0; i < tradingPairs.length; i++) {
+      const ccy0 = tradingPairs[i][0]
+      const ccy1 = tradingPairs[i][1]
+      const pool = await getPool(ctx, ccy0.Token, ccy1.Token)
+      const poolVol = await getDailyPoolVol(ctx, pool,formattedDate)
+      const poolLiquidity = await getPoolLiquidity(ctx, pool)
+      overviewHistory.totalLiquidity =
+        BigInt(overviewHistory.totalLiquidity!) + BigInt(Number(poolLiquidity.usdTotalLiquidity).toFixed(0))
+      overviewHistory.totalVolumeDay =
+        BigInt(overviewHistory.totalVolumeDay!) + BigInt(Number(poolVol!.volumeDayUSD).toFixed(0))
+    }
+
+    await ctx.store.save(overviewHistory)
+    lastOverviewTimestamp = ctx.block.timestamp
+    return
+  }
+}
+
+async function getOverviewHistory(ctx: BlockHandlerContext, date: Date) {
+  const timestamp = startOfDay(date)
+  try {
+    return await ctx.store.findOneOrFail<OverviewHistory>(OverviewHistory, { timestamp })
+  } catch {
+    const dailyOverview = new OverviewHistory({
+      id: ctx.block.id + date.getTime(),
+      totalLiquidity: BigInt(0),
+      totalVolumeDay: BigInt(0),
+      timestamp,
+    })
+    await ctx.store.save(dailyOverview)
+    return dailyOverview
+  }
+}
+
+async function getLastOverviewHistory(store: Store) {
+  return await store.findOne(OverviewHistory, {}, { order: { timestamp: 'DESC' } })
 }
 
 async function getLastPoolLiquidity(store: Store) {
@@ -63,9 +115,14 @@ async function getPoolVolume(ctx: BlockHandlerContext | EventHandlerContext, poo
   const blockDate = new Date(ctx.block.timestamp)
   const timestamp = startOfDay(blockDate)
   try {
-    return await ctx.store.findOneOrFail<PoolVolumeDay>(PoolVolumeDay, { where: { pool, timestamp } })
+    return await ctx.store.findOneOrFail<PoolVolumeDay>(PoolVolumeDay, { where: { pool: pool, timestamp: timestamp } })
   } catch {
-    const poolVol = new PoolVolumeDay({ id: ctx.block.id + timestamp, pool, volumeDayUSD: 0, timestamp })
+    const poolVol = new PoolVolumeDay({
+      id: ctx.block.id + pool.id,
+      pool: pool,
+      volumeDayUSD: 0,
+      timestamp: timestamp,
+    })
     await ctx.store.save(poolVol)
     return poolVol
   }
@@ -81,7 +138,8 @@ export async function updatePoolVolume(
   const poolVol = await getPoolVolume(ctx, pool)
   const blockDate = new Date(ctx.block.timestamp)
   const val = await calcUsdVal(ctx, curr0, fromAmount, blockDate)
-  poolVol.volumeDayUSD = Number(poolVol.volumeDayUSD!) + Number(val)
+  poolVol!.volumeDayUSD = Number(poolVol!.volumeDayUSD!) + Number(val)
+  poolVol!.timestamp = startOfDay(new Date(ctx.block.timestamp))
   await ctx.store.save(poolVol)
 }
 
@@ -97,6 +155,9 @@ async function getPoolLiquidity(ctx: BlockHandlerContext | EventHandlerContext, 
     return poolVol
   }
 }
+async function getDailyPoolVol(ctx: BlockHandlerContext, pool: Pool, timestamp: Date){
+  return await ctx.store.findOne<PoolVolumeDay>(PoolVolumeDay, { where: { pool: pool, timestamp: timestamp } })
+}
 
 export async function updatePoolLiquidity(
   ctx: EventHandlerContext | BlockHandlerContext,
@@ -107,7 +168,7 @@ export async function updatePoolLiquidity(
 ) {
   const pool = await getPool(ctx, curr0, curr1)
   const poolLiquidity = await getPoolLiquidity(ctx, pool)
-  const date = new Date(ctx.block.timestamp)
+  const date = startOfHour(new Date(ctx.block.timestamp))
 
   const curr = await getCurrency(ctx, curr0)
 

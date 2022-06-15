@@ -230,10 +230,3 @@ async function getPrevBalance(
   assert(rows.length == 1)
   return [rows[0].balanceZero, rows[0].balanceOne]
 }
-
-// function getBlockTimestamp(block: Block): number {
-//     // let ex = block.extrinsics.find(({method: {method, section}}) => section === 'timestamp' && method === 'set')
-//     // return ex ? (ex.args[0].toJSON() as number) : 0
-//     // @ts-ignore
-//     return block.timestamp ? block.timestamp : 0
-// }

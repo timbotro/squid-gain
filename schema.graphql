@@ -99,12 +99,3 @@ type OverviewHistory @entity {
   totalVolumeDay: BigInt
   timestamp: DateTime
 }
-
-# type ChainState @entity {
-#   id: ID!
-#   # chain: Chain! @index
-#   dexPairs: [Pool]
-#   token0Balance: BigInt!
-#   token1Balance: BigInt!
-#   timestamp: DateTime! @index
-# }

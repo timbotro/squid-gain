@@ -2,7 +2,7 @@ import * as handlers from './mappings'
 import { lookupArchive } from '@subsquid/archive-registry'
 import { SubstrateProcessor } from '@subsquid/substrate-processor'
 import { setPriority } from 'os'
-import { handlePoolData } from './mappings/liquidityPools'
+import { handleDailyStats, handlePoolData } from './mappings/liquidityPools'
 require('dotenv/config')
 
 const processor = new SubstrateProcessor('karura_swap')
@@ -15,6 +15,7 @@ processor.setDataSource({
 processor.setTypesBundle('karura')
 processor.setBlockRange({ from: 2000000 })
 processor.addPreHook(handlePoolData)
+processor.addPreHook(handleDailyStats)
 processor.addEventHandler('dex.Swap', handlers.handleSwap)
 processor.addEventHandler('dex.AddLiquidity', handlers.handleAddLiquidity)
 processor.addEventHandler('dex.RemoveLiquidity', handlers.handleRemoveLiquidity)
