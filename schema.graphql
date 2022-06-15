@@ -12,12 +12,12 @@ type HistoricalBalance @entity {
   date: DateTime!
 }
 
-type Swap @entity{
-   timestamp: BigInt
-   fromCurrency: String
-   toCurrency: String
-   fromAmount: BigInt
-   toAmount: BigInt
+type Swap @entity {
+  timestamp: BigInt
+  fromCurrency: Currency
+  toCurrency: Currency
+  fromAmount: BigInt
+  toAmount: BigInt
 }
 
 type LiquidityChange @entity {
@@ -33,8 +33,8 @@ type LiquidityChange @entity {
   amountOne: BigInt!
   balanceZero: BigInt!
   balanceOne: BigInt!
+  #   currencies: [Currency]
 }
-
 
 enum LiquidityChangeReason {
   INIT
@@ -42,3 +42,69 @@ enum LiquidityChangeReason {
   ADD
   REMOVE
 }
+
+type Currency @entity {
+  currencyName: String! @index
+  decimals: Int
+  volumeDayHistory: [CurrVolumeDay] @derivedFrom(field: "currency")
+  liquidityHistory: [CurrLiquidity] @derivedFrom(field: "currency")
+  priceHistory: [CurrPrice] @derivedFrom(field: "currency")
+  #   transactions: [LiquidityChange!]!
+}
+
+type CurrPrice @entity {
+  currency: Currency
+  usdPrice: Float
+  timestamp: DateTime
+}
+
+type CurrVolumeDay @entity {
+  currency: Currency
+  timestamp: DateTime
+  volumeDayNative: BigInt
+  volumeDayUSD: Float
+}
+
+type CurrLiquidity @entity {
+  currency: Currency
+  timestamp: DateTime
+  liquidity: BigInt
+  liquidityUSD: Float
+}
+
+type Pool @entity {
+  currency0: String!
+  currency1: String!
+  volumeDaysDay: [PoolVolumeDay] @derivedFrom(field: "pool")
+  liquidityHistory: [PoolLiquidity] @derivedFrom(field: "pool")
+  # poolOperations: [LiquidityChange] @derivedFrom(field: "pool")
+}
+
+type PoolVolumeDay @entity {
+  pool: Pool
+  timestamp: DateTime
+  volumeDayUSD: Float
+}
+
+type PoolLiquidity @entity {
+  pool: Pool
+  timestamp: DateTime
+  token0Liquidity: BigInt
+  token1Liquidity: BigInt
+  usdTotalLiquidity: Float
+}
+
+type OverviewHistory @entity {
+  totalLiquidity: BigInt
+  totalVolumeDay: BigInt
+  timestamp: DateTime
+}
+
+# type ChainState @entity {
+#   id: ID!
+#   # chain: Chain! @index
+#   dexPairs: [Pool]
+#   token0Balance: BigInt!
+#   token1Balance: BigInt!
+#   timestamp: DateTime! @index
+# }

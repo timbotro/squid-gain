@@ -1,7 +1,7 @@
 import {EventHandlerContext} from "@subsquid/substrate-processor"
 import {DexAddLiquidityEvent} from "../types/events"
 import {LiquidityChangeReason} from "../model/generated"
-import {addLiquidityChange} from "./utility" 
+import {addLiquidityChange, getCurrency} from "./utility" 
 import {CurrencyId, CurrencyId_Token} from "../types/v2041"
 
 

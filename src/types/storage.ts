@@ -32,6 +32,11 @@ export class DexLiquidityPoolStorage {
     return this.ctx._chain.getStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', key)
   }
 
+  async getManyAsV1000(keys: [v1000.CurrencyId, v1000.CurrencyId][]): Promise<([bigint, bigint])[]> {
+    assert(this.isV1000)
+    return this.ctx._chain.queryStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', keys.map(k => [k]))
+  }
+
   /**
    *  Liquidity pool for TradingPair.
    * 
@@ -49,6 +54,11 @@ export class DexLiquidityPoolStorage {
   async getAsV1008(key: [v1008.CurrencyId, v1008.CurrencyId]): Promise<[bigint, bigint]> {
     assert(this.isV1008)
     return this.ctx._chain.getStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', key)
+  }
+
+  async getManyAsV1008(keys: [v1008.CurrencyId, v1008.CurrencyId][]): Promise<([bigint, bigint])[]> {
+    assert(this.isV1008)
+    return this.ctx._chain.queryStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', keys.map(k => [k]))
   }
 
   /**
@@ -70,6 +80,11 @@ export class DexLiquidityPoolStorage {
     return this.ctx._chain.getStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', key)
   }
 
+  async getManyAsV1009(keys: [v1009.CurrencyId, v1009.CurrencyId][]): Promise<([bigint, bigint])[]> {
+    assert(this.isV1009)
+    return this.ctx._chain.queryStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', keys.map(k => [k]))
+  }
+
   /**
    *  Liquidity pool for TradingPair.
    * 
@@ -87,6 +102,11 @@ export class DexLiquidityPoolStorage {
   async getAsV1019(key: v1019.TradingPair): Promise<[bigint, bigint]> {
     assert(this.isV1019)
     return this.ctx._chain.getStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', key)
+  }
+
+  async getManyAsV1019(keys: v1019.TradingPair[]): Promise<([bigint, bigint])[]> {
+    assert(this.isV1019)
+    return this.ctx._chain.queryStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', keys.map(k => [k]))
   }
 
   /**
@@ -108,6 +128,11 @@ export class DexLiquidityPoolStorage {
     return this.ctx._chain.getStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', key)
   }
 
+  async getManyAsV2001(keys: v2001.TradingPair[]): Promise<([bigint, bigint])[]> {
+    assert(this.isV2001)
+    return this.ctx._chain.queryStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', keys.map(k => [k]))
+  }
+
   /**
    *  Liquidity pool for TradingPair.
    * 
@@ -125,6 +150,11 @@ export class DexLiquidityPoolStorage {
   async getAsV2010(key: v2010.TradingPair): Promise<[bigint, bigint]> {
     assert(this.isV2010)
     return this.ctx._chain.getStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', key)
+  }
+
+  async getManyAsV2010(keys: v2010.TradingPair[]): Promise<([bigint, bigint])[]> {
+    assert(this.isV2010)
+    return this.ctx._chain.queryStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', keys.map(k => [k]))
   }
 
   /**
@@ -146,6 +176,11 @@ export class DexLiquidityPoolStorage {
     return this.ctx._chain.getStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', key)
   }
 
+  async getManyAsV2011(keys: v2011.TradingPair[]): Promise<([bigint, bigint])[]> {
+    assert(this.isV2011)
+    return this.ctx._chain.queryStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', keys.map(k => [k]))
+  }
+
   /**
    *  Liquidity pool for TradingPair.
    * 
@@ -165,6 +200,11 @@ export class DexLiquidityPoolStorage {
     return this.ctx._chain.getStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', key)
   }
 
+  async getManyAsV2022(keys: v2022.TradingPair[]): Promise<([bigint, bigint])[]> {
+    assert(this.isV2022)
+    return this.ctx._chain.queryStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', keys.map(k => [k]))
+  }
+
   /**
    *  Liquidity pool for TradingPair.
    * 
@@ -182,6 +222,11 @@ export class DexLiquidityPoolStorage {
   async getAsV2041(key: v2041.TradingPair): Promise<[bigint, bigint]> {
     assert(this.isV2041)
     return this.ctx._chain.getStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', key)
+  }
+
+  async getManyAsV2041(keys: v2041.TradingPair[]): Promise<([bigint, bigint])[]> {
+    assert(this.isV2041)
+    return this.ctx._chain.queryStorage(this.ctx.block.hash, 'Dex', 'LiquidityPool', keys.map(k => [k]))
   }
 
   /**

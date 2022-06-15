@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Thu Jun  9 08:33:30 2022
+# Make data base, printed on Tue Jun 14 09:47:31 2022
 
 # Variables
 
@@ -17,6 +17,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 ?F = $(notdir $?)
 # environment
 VSCODE_LOG_NATIVE = false
+# environment
+NVM_INC = /Users/timbo/.nvm/versions/node/v6.17.1/include/node
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -42,15 +44,15 @@ INFOPATH = /opt/homebrew/share/info:
 # environment
 P9K_SSH = 0
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/1j/v_lqv7cd4hb_bktvqptwhx9m0000gn/T/vscode-ipc-f2fd0b0c-a3e0-480d-bca0-db98c4ea9bb3.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/1j/v_lqv7cd4hb_bktvqptwhx9m0000gn/T/vscode-ipc-85200524-75e6-4e29-b057-d021ddf6216e.sock
 # environment
 VSCODE_CWD = /
 # environment
-PATH = /Users/timbo/.pyenv/shims:/Users/timbo/.deno/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/timbo/.cargo/bin
+PATH = /Users/timbo/.nvm/versions/node/v6.17.1/bin:/Users/timbo/.pyenv/shims:/Users/timbo/.deno/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/timbo/.cargo/bin
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-LaunchInstanceID = CAC1CD53-78F5-4614-8EFF-818ACD34C854
+NVM_BIN = /Users/timbo/.nvm/versions/node/v6.17.1/bin
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -58,7 +60,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.lN1mF7r9dx/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.obuPPqr3U3/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -70,7 +72,7 @@ HOMEBREW_CELLAR = /opt/homebrew/Cellar
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
-MANPATH = /opt/homebrew/share/man::
+MANPATH = /Users/timbo/.nvm/versions/node/v6.17.1/share/man:/opt/homebrew/share/man::
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -83,6 +85,8 @@ VSCODE_CODE_CACHE_PATH = /Users/timbo/Library/Application Support/Code/CachedDat
 LOGNAME = timbo
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+NVM_CD_FLAGS = -q
 # environment
 ZSH = /Users/timbo/.oh-my-zsh
 # environment
@@ -124,6 +128,8 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
+NVM_DIR = /Users/timbo/.nvm
+# environment
 XPC_SERVICE_NAME = application.com.microsoft.VSCode.7396923.7396929
 # environment
 HOMEBREW_PREFIX = /opt/homebrew
@@ -147,8 +153,6 @@ MAKEFILES :=
 PAGER = less
 # environment
 LC_ALL = C
-# environment
-SECURITYSESSIONID = 186b3
 # automatic
 ^F = $(notdir $^)
 # default
@@ -158,9 +162,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 560
+VSCODE_PID = 23031
 # variable set hash-table stats:
-# Load=74/1024=7%, Rehash=0, Collisions=1/97=1%
+# Load=76/1024=7%, Rehash=0, Collisions=1/99=1%
 
 # Pattern-specific Variable Values
 
@@ -168,9 +172,9 @@ VSCODE_PID = 560
 
 # Directories
 
-# . (device 16777234, inode 9440642): 28 files, no impossibilities.
+# . (device 16777233, inode 9440642): 30 files, no impossibilities.
 
-# 28 files, no impossibilities in 1 directories.
+# 30 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -313,6 +317,9 @@ down:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
+make: *** No rule to make target `all'.  Stop.
+
 #  commands to execute (from `Makefile', line 45):
 	@docker-compose down
 	
@@ -325,14 +332,11 @@ down:
 
 # No general (`VPATH' variable) search path.
 
- 
-make: *** No rule to make target `all'.  Stop.
-
 # # of strings in strcache: 1
 # # of strcache buffers: 1
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu Jun  9 08:33:30 2022
+# Finished Make data base on Tue Jun 14 09:47:31 2022
 
  
