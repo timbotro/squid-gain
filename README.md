@@ -11,11 +11,11 @@
 ## Instructions
 > :information_source: NPM 8+ required for this repo. Consider using `nvm` to manage multiple versions if you require legacy support.
 
-1.) Clone repo and run: `npm i`
-2.) Bring up DB docker container: `make up`
-3.) Define DB: `make migrate`
-4.) Run the Squid: `bash scripts/docker-run.sh`
-5.) Run the GraphQL server: `make serve`
+1) Clone repo and run: `npm i`
+2) Bring up DB docker container: `make up`
+3) Define DB: `make migrate`
+4) Run the Squid: `bash scripts/docker-run.sh`
+5) Run the GraphQL server: `make serve`
 
 ## Queries
 > :information_source: A longer list of queries can be found here: [SquidGain Queries](https://hackmd.io/FfIG5fErSjiS2YKvNYv6-A)
