@@ -47,6 +47,6 @@
   },
   "overrides": {
     "simple-git": ">=3.5.0",
-    "yargs-parser": ">=5.0.1"
+    "yargs-parser": ">=5.1.0"
   }
 }
