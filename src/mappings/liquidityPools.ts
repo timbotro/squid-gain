@@ -1,7 +1,7 @@
 import primitivesConfig from '@acala-network/type-definitions/primitives'
 import { BlockHandlerContext, EventHandlerContext, Store } from '@subsquid/substrate-processor'
 import { DexSwapEvent } from '../types/events'
-import { calcUsdVal, getLiquidityPool } from './utility'
+import { bigIntConvert, calcUsdVal, getLiquidityPool, numberConvert } from './utility'
 import { Currency, OverviewHistory, Pool, PoolLiquidity, PoolVolumeDay } from '../model/generated'
 import { addLiquidityChange, getCurrency, updateGlobalLiquidities, updateGlobalVolumes } from './utility'
 import { startOfDay, startOfHour } from 'date-fns'
@@ -70,13 +70,8 @@ export async function handleDailyStats(ctx: BlockHandlerContext) {
   }
 }
 
-function bigIntConvert(section: any, call: any): bigint {
-  try {
-    return BigInt(Number(section[call]).toFixed(0))
-  } catch {
-    return BigInt(0)
-  }
-}
+
+
 
 async function getOverviewHistory(ctx: BlockHandlerContext, date: Date) {
   const timestamp = startOfDay(date)
@@ -144,7 +139,8 @@ export async function updatePoolVolume(
   const poolVol = await getPoolVolume(ctx, pool)
   const blockDate = new Date(ctx.block.timestamp)
   const val = await calcUsdVal(ctx, curr0, fromAmount, blockDate)
-  poolVol!.volumeDayUSD = Number(poolVol!.volumeDayUSD!) + Number(val)
+  const convertedVal = Number(val)? Number(val) : 0 
+  poolVol!.volumeDayUSD = numberConvert(poolVol, "volumeDayUSD") + convertedVal
   poolVol!.timestamp = startOfDay(new Date(ctx.block.timestamp))
   await ctx.store.save(poolVol)
 }

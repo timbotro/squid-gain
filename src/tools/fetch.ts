@@ -13,6 +13,7 @@ import { Currency, CurrPrice } from '../model/generated'
 import { acala } from '../mappings/api'
 import { nativeTokenDecimals } from '../static/decimals'
 import { getApi } from '../mappings/newApi'
+import { numberConvert } from '../mappings/utility'
 
 const api = acala()
 
@@ -46,14 +47,24 @@ async function getNativePrice(hash: string, curr: string) {
 
   //@ts-ignore
   const dpDiff = nativeTokenDecimals.KUSD - nativeTokenDecimals[curr]
-  const price = Number(resp[0] / resp[1]) / 10 ** dpDiff
+  const price = Number(resp[0] / resp[1]) ?  Number(resp[0] / resp[1]) / 10 ** dpDiff : 0
 
-  return price
+  return price 
 }
 
 async function getKarPrice(hash: string) {
   const apiAt = await (await api).at(hash)
   const resp = (await apiAt.query.dex.liquidityPool([nativeTokens.kar, nativeTokens.kusd])).toJSON() as any
-  const price = Number(resp[0] / resp[1])
+  let price = Number(resp[0] / resp[1]) ?  Number(resp[0] / resp[1]) : 0
+  if (price===0) price = await getKarFromKsm(hash)
   return price
+}
+
+
+async function getKarFromKsm(hash: string){
+  const apiAt = await (await api).at(hash)
+  const resp = (await apiAt.query.dex.liquidityPool([nativeTokens.kar, nativeTokens.ksm])).toJSON() as any
+  const price = Number(resp[1] / resp[0]) ?  Number(resp[1] / resp[0]) : 0
+
+  return price * await getNativePrice(hash,"KSM")
 }

@@ -1,10 +1,7 @@
-module.exports = class Data1655326911639 {
-  name = 'Data1655326911639'
+module.exports = class Data1655379132809 {
+  name = 'Data1655379132809'
 
   async up(db) {
-    await db.query(`CREATE TABLE "historical_balance" ("id" character varying NOT NULL, "balance" numeric NOT NULL, "date" TIMESTAMP WITH TIME ZONE NOT NULL, "account_id" character varying NOT NULL, CONSTRAINT "PK_74ac29ad0bdffb6d1281a1e17e8" PRIMARY KEY ("id"))`)
-    await db.query(`CREATE INDEX "IDX_383ff006e4b59db91d32cb891e" ON "historical_balance" ("account_id") `)
-    await db.query(`CREATE TABLE "account" ("id" character varying NOT NULL, "balance" numeric NOT NULL, CONSTRAINT "PK_54115ee388cdb6d86bb4bf5b2ea" PRIMARY KEY ("id"))`)
     await db.query(`CREATE TABLE "curr_volume_day" ("id" character varying NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE, "volume_day_native" numeric, "volume_day_usd" numeric, "currency_id" character varying, CONSTRAINT "PK_8ec9c8475cb43665ae52199e606" PRIMARY KEY ("id"))`)
     await db.query(`CREATE INDEX "IDX_93ac589e3c87a5c6510a690dd2" ON "curr_volume_day" ("currency_id") `)
     await db.query(`CREATE TABLE "curr_liquidity" ("id" character varying NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE, "liquidity" numeric, "liquidity_usd" numeric, "currency_id" character varying, CONSTRAINT "PK_c80cc5b8686e0894e99e6edad77" PRIMARY KEY ("id"))`)
@@ -23,7 +20,6 @@ module.exports = class Data1655326911639 {
     await db.query(`CREATE INDEX "IDX_09772a4143d40063de22a1d556" ON "pool_liquidity" ("pool_id") `)
     await db.query(`CREATE TABLE "pool" ("id" character varying NOT NULL, "currency0" text NOT NULL, "currency1" text NOT NULL, CONSTRAINT "PK_db1bfe411e1516c01120b85f8fe" PRIMARY KEY ("id"))`)
     await db.query(`CREATE TABLE "overview_history" ("id" character varying NOT NULL, "total_liquidity" numeric, "total_volume_day" numeric, "timestamp" TIMESTAMP WITH TIME ZONE, CONSTRAINT "PK_89dd196df1321e3039cdaa8fdd4" PRIMARY KEY ("id"))`)
-    await db.query(`ALTER TABLE "historical_balance" ADD CONSTRAINT "FK_383ff006e4b59db91d32cb891e9" FOREIGN KEY ("account_id") REFERENCES "account"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
     await db.query(`ALTER TABLE "curr_volume_day" ADD CONSTRAINT "FK_93ac589e3c87a5c6510a690dd23" FOREIGN KEY ("currency_id") REFERENCES "currency"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
     await db.query(`ALTER TABLE "curr_liquidity" ADD CONSTRAINT "FK_e17ad5c686feb6cd4e4840ce48e" FOREIGN KEY ("currency_id") REFERENCES "currency"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
     await db.query(`ALTER TABLE "curr_price" ADD CONSTRAINT "FK_48a6a61594cc62fc3e5e54bd48d" FOREIGN KEY ("currency_id") REFERENCES "currency"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`)
@@ -34,9 +30,6 @@ module.exports = class Data1655326911639 {
   }
 
   async down(db) {
-    await db.query(`DROP TABLE "historical_balance"`)
-    await db.query(`DROP INDEX "public"."IDX_383ff006e4b59db91d32cb891e"`)
-    await db.query(`DROP TABLE "account"`)
     await db.query(`DROP TABLE "curr_volume_day"`)
     await db.query(`DROP INDEX "public"."IDX_93ac589e3c87a5c6510a690dd2"`)
     await db.query(`DROP TABLE "curr_liquidity"`)
@@ -55,7 +48,6 @@ module.exports = class Data1655326911639 {
     await db.query(`DROP INDEX "public"."IDX_09772a4143d40063de22a1d556"`)
     await db.query(`DROP TABLE "pool"`)
     await db.query(`DROP TABLE "overview_history"`)
-    await db.query(`ALTER TABLE "historical_balance" DROP CONSTRAINT "FK_383ff006e4b59db91d32cb891e9"`)
     await db.query(`ALTER TABLE "curr_volume_day" DROP CONSTRAINT "FK_93ac589e3c87a5c6510a690dd23"`)
     await db.query(`ALTER TABLE "curr_liquidity" DROP CONSTRAINT "FK_e17ad5c686feb6cd4e4840ce48e"`)
     await db.query(`ALTER TABLE "curr_price" DROP CONSTRAINT "FK_48a6a61594cc62fc3e5e54bd48d"`)

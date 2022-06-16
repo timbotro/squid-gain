@@ -14,8 +14,10 @@ processor.setDataSource({
 })
 processor.setTypesBundle('karura')
 processor.setBlockRange({ from: 1500000 })
-processor.addPreHook(handlePoolData)
-processor.addPreHook(handleDailyStats)
+processor.addPreHook(async (ctx) => {
+  await handlePoolData(ctx)
+  await handleDailyStats(ctx)
+})
 processor.addEventHandler('dex.Swap', handlers.handleSwap)
 processor.addEventHandler('dex.AddLiquidity', handlers.handleAddLiquidity)
 processor.addEventHandler('dex.RemoveLiquidity', handlers.handleRemoveLiquidity)

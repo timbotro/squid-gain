@@ -184,7 +184,7 @@ export async function updateGlobalVolumes(ctx: EventHandlerContext, curr: Curren
   const volChange = await calcUsdVal(ctx, curr, amount, blockDate)
 
   currVolDay.volumeDayNative = currVolDay.volumeDayNative! + amount
-  currVolDay.volumeDayUSD = Number(currVolDay.volumeDayUSD!) + volChange
+  currVolDay.volumeDayUSD = numberConvert(currVolDay, "volumeDayUSD") + volChange
   await ctx.store.save(currVolDay)
 
 }
@@ -203,7 +203,7 @@ export async function updateGlobalLiquidities(ctx: EventHandlerContext, curr: Cu
 export async function calcUsdVal(ctx: EventHandlerContext|BlockHandlerContext, curr: Currency, amt: number | bigint, date: Date) {
   const decimals = getDecimals(curr.currencyName)
   const currentPrice = await getPrice(ctx, curr, date)
-  const volChange = (currentPrice!.usdPrice! * Number(amt)) / 10 ** decimals
+  const volChange = (numberConvert(currentPrice, "usdPrice") * Number(amt)) / 10 ** decimals
   return volChange
 }
 
@@ -229,4 +229,19 @@ async function getPrevBalance(
   })
   assert(rows.length == 1)
   return [rows[0].balanceZero, rows[0].balanceOne]
+}
+
+export function bigIntConvert(section: any, call: any): bigint {
+  try {
+    return BigInt(Number(section[call]).toFixed(0))
+  } catch {
+    return BigInt(0)
+  }
+}
+export function numberConvert(section: any, call: any): number {
+  try {
+    return Number(section[call])
+  } catch {
+    return 0
+  }
 }

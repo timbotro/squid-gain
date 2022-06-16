@@ -1,17 +1,3 @@
-type Account @entity {
-  "Account address"
-  id: ID!
-  balance: BigInt!
-  historicalBalances: [HistoricalBalance!] @derivedFrom(field: "account")
-}
-
-type HistoricalBalance @entity {
-  id: ID!
-  account: Account!
-  balance: BigInt!
-  date: DateTime!
-}
-
 type Swap @entity {
   timestamp: BigInt
   fromCurrency: Currency
