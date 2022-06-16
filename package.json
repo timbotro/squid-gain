@@ -29,6 +29,7 @@
     "moment": "^2.29.3",
     "pg": "^8.7.3",
     "prettier": "^2.6.2",
+    "simple-git": "^3.7.1",
     "type-graphql": "1.2.0-rc.1",
     "typeorm": "^0.2.45",
     "typeorm-typedi-extensions": "^0.4.1"

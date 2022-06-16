@@ -5,6 +5,7 @@ RUN apk add g++ make python3
 
 FROM node-with-gyp AS builder
 WORKDIR /squid
+ENV KAR_WSS wss://karura-rpc.dwellir.com
 ADD package.json .
 ADD package-lock.json .
 RUN npm ci
@@ -13,6 +14,7 @@ ADD src src
 RUN npm run build
 
 FROM node-with-gyp AS deps
+ENV KAR_WSS wss://karura-rpc.dwellir.com
 WORKDIR /squid
 ADD package.json .
 ADD package-lock.json .
@@ -37,8 +39,10 @@ EXPOSE 4000
 
 
 FROM squid AS processor
+ENV KAR_WSS wss://karura-rpc.dwellir.com
 CMD ["npm", "run", "processor:start"]
 
 
 FROM squid AS query-node
+ENV KAR_WSS wss://karura-rpc.dwellir.com
 CMD ["npm", "run", "query-node:start"]
