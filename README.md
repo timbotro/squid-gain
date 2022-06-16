@@ -1,5 +1,5 @@
 ## Overview
-|Title|SquidGain----|
+|Title|SquidGain|
 |----|----|
 |Hackathon|[amsterDOT Hack](https://dorahacks.io/hackathon/22/detail)|
 |Bounty Name|[SubSquid: Karura Defi Dashboard](https://github.com/subsquid/community/issues/7)|
