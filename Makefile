@@ -32,7 +32,7 @@ karuraVersions.json:
 
 explore:
 	@npx squid-substrate-metadata-explorer \
-		--chain wss://karura-rpc.dwellir.com \
+		--chain wss://karura.api.onfinality.io/public-ws \
 		--archive https://karura.indexer.gc.subsquid.io/v4/graphql \
 		--out karuraVersions.json
 

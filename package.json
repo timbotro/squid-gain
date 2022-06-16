@@ -29,7 +29,8 @@
     "moment": "^2.29.3",
     "pg": "^8.7.3",
     "prettier": "^2.7.1",
-    "type-graphql": "1.2.0-rc.1"
+    "type-graphql": "1.2.0-rc.1",
+    "typeorm-typedi-extensions": "^0.4.1"
   },
   "devDependencies": {
     "@subsquid/substrate-metadata-explorer": "^0.0.8",
