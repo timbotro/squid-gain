@@ -13,7 +13,7 @@
 
 1) Clone repo and run: `npm i`
 2) Bring up DB docker container: `make up`
-3) Define DB: `make migrate`
+3) Define DB: `make codegen && make build && make migrate`
 4) Run the Squid: `bash scripts/docker-run.sh`
 5) Run the GraphQL server: `make serve`
 
