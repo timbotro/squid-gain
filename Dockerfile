@@ -5,7 +5,6 @@ RUN apk add g++ make python3
 
 FROM node-with-gyp AS builder
 WORKDIR /squid
-ENV KAR_WSS wss://karura-rpc.dwellir.com
 ADD package.json .
 ADD package-lock.json .
 RUN npm ci
@@ -14,7 +13,6 @@ ADD src src
 RUN npm run build
 
 FROM node-with-gyp AS deps
-ENV KAR_WSS wss://karura-rpc.dwellir.com
 WORKDIR /squid
 ADD package.json .
 ADD package-lock.json .
@@ -28,11 +26,10 @@ COPY --from=deps /squid/node_modules node_modules
 COPY --from=builder /squid/lib lib
 ADD db db
 ADD schema.graphql .
-# TODO: use shorter PROMETHEUS_PORT
 ENV PROCESSOR_PROMETHEUS_PORT 3000
 ENV DB_NAME squid
 ENV DB_PASS squid
-ENV DB_PORT 23798
+# ENV DB_PORT 5432
 ENV KAR_WSS wss://karura-rpc.dwellir.com
 EXPOSE 3000
 EXPOSE 4000

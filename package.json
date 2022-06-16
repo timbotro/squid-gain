@@ -46,6 +46,7 @@
     "typescript": "next"
   },
   "overrides": {
-    "simple-git": ">=3.5.0"
+    "simple-git": ">=3.5.0",
+    "yargs-parser": ">=5.0.1"
   }
 }
