@@ -3,6 +3,7 @@
 |----|----|
 |Hackathon|[amsterDOT Hack](https://dorahacks.io/hackathon/22/detail)|
 |Bounty Name|[SubSquid: Karura Defi Dashboard](https://github.com/subsquid/community/issues/7)|
+|FE Repo|[Karura Dashboard](https://github.com/brettkolodny/karura-dashboard)|
 |Summary|DeFi Dashboard for Karura DEX|
 |Website|[Live Dashboard](https://karura-subsquid-dashboard.netlify.app/)|
 |Video|youtube|
@@ -18,7 +19,7 @@
 5) Run the GraphQL server: `make serve`
 
 ## Queries
-> :information_source: A longer list of queries can be found here: [SquidGain Queries](https://hackmd.io/FfIG5fErSjiS2YKvNYv6-A)
+> :information_source: A longer list of queries can be found here: [SquidGain Queries](https://hackmd.io/@sbEUnQsTTV2_PRpn22F8QQ/SJJZbKuK5)
 ### Overall Stats
 ```
 query MyQuery {
