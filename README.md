@@ -4,7 +4,7 @@
 |Hackathon|[amsterDOT Hack](https://dorahacks.io/hackathon/22/detail)|
 |Bounty Name|[SubSquid: Karura Defi Dashboard](https://github.com/subsquid/community/issues/7)|
 |Summary|DeFi Dashboard for Karura DEX|
-|Website|Dashboard|
+|Website|[Live Dashboard](https://karura-subsquid-dashboard.netlify.app/)|
 |Video|youtube|
 
 
