@@ -6,7 +6,7 @@
 |FE Repo|[Karura Dashboard](https://github.com/brettkolodny/karura-dashboard)|
 |Summary|DeFi Dashboard for Karura DEX|
 |Website|[Live Dashboard](https://karura-subsquid-dashboard.netlify.app/)|
-|Video|youtube|
+|Video|[youtube](https://youtu.be/mU0Fz83Nyrg)|
 
 
 ## Instructions
